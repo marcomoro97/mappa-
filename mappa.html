@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Mappa Appartamenti</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+    .mapboxgl-popup-content {
+      font-family: Arial, sans-serif;
+      background-color: #f5f1ea;
+      color: #4d3c2e;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .mapboxgl-popup-content a {
+      color: #8b5e3c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .mapboxgl-popup-content a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    mapboxgl.accessToken = 'INSERISCI_LA_TUA_MAPBOX_ACCESS_TOKEN';
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [12.5, 42.5], // centro Italia
+      zoom: 5.5
+    });
+
+    const apartments = [
+      {
+        name: "Prova 1",
+        coords: [9.9152, 45.6656],
+        link: "https://clhost.it"
+      },
+      {
+        name: "Prova 2",
+        coords: [9.6768, 45.6977],
+        link: "https://clhost.it"
+      },
+      {
+        name: "Prova 3",
+        coords: [14.2532, 40.8497],
+        link: "https://clhost.it"
+      }
+    ];
+
+    apartments.forEach(apartment => {
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        <strong>${apartment.name}</strong><br><a href="${apartment.link}" target="_blank">Prenota ora</a>
+      );
+
+      new mapboxgl.Marker({ color: '#8b5e3c' })
+        .setLngLat(apartment.coords)
+        .setPopup(popup)
+        .addTo(map);
+    });
+  </script>
+</body>
+</html>
